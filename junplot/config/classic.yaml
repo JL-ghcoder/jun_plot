@@ -1,0 +1,52 @@
+# 图表基本尺寸
+figsize: [7, 5]  # 图表大小 [宽, 高]，单位为英寸
+
+# 字体配置（元素细分）
+font_config:
+  # 标题字体设置
+  title:
+    size: 12  # 标题字体大小
+    weight: bold  # 字体粗细: normal, bold
+  
+  # X轴标签字体设置
+  xlabel:
+    size: 12
+    weight: normal
+  
+  # Y轴标签字体设置
+  ylabel:
+    size: 12
+    weight: normal
+  
+  # 图例字体设置
+  legend:
+    size: 10
+    weight: normal
+  
+  # 刻度标签字体设置
+  ticks:
+    size: 8
+    weight: normal
+  
+  # 默认字体设置（用于未特别指定的元素）
+  default:
+    size: 10
+    weight: normal
+
+# 内边距配置（元素细分）
+padding_config:
+  title: 12  # 标题内边距
+  xlabel: 12  # X轴标签内边距
+  ylabel: 12  # Y轴标签内边距
+  legend: 3  # 图例内边距
+
+# 颜色配置
+color_palette:
+  - "#1f77b4"  # 蓝色
+  - "#ff7f0e"  # 橙色
+  - "#2ca02c"  # 绿色
+  - "#d62728"  # 红色
+  - "#9467bd"  # 紫色
+  - "#8c564b"  # 棕色
+  - "#e377c2"  # 粉色
+  - "#7f7f7f"  # 灰色

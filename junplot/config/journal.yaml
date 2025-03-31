@@ -1,0 +1,52 @@
+# 图表基本尺寸 - 适合单栏期刊
+figsize: [4.5, 3.5]  # 图表大小 [宽, 高]，单位为英寸
+
+# 字体配置（元素细分）
+font_config:
+  # 标题字体设置
+  title:
+    size: 11  # 标题字体大小
+    weight: bold  # 字体粗细: normal, bold
+  
+  # X轴标签字体设置
+  xlabel:
+    size: 10
+    weight: normal
+  
+  # Y轴标签字体设置
+  ylabel:
+    size: 10
+    weight: normal
+  
+  # 图例字体设置
+  legend:
+    size: 8
+    weight: normal
+  
+  # 刻度标签字体设置
+  ticks:
+    size: 8
+    weight: normal
+  
+  # 默认字体设置
+  default:
+    size: 9
+    weight: normal
+
+# 内边距配置
+padding_config:
+  title: 8  # 标题内边距
+  xlabel: 8  # X轴标签内边距
+  ylabel: 10  # Y轴标签内边距
+  legend: 2  # 图例内边距
+
+# 颜色配置 - 高对比度适合印刷
+color_palette:
+  - "#0072B2"  # 深蓝色
+  - "#D55E00"  # 橙褐色
+  - "#009E73"  # 蓝绿色
+  - "#CC79A7"  # 洋红色
+  - "#56B4E9"  # 天蓝色
+  - "#E69F00"  # 黄橙色
+  - "#F0E442"  # 黄色
+  - "#000000"  # 黑色

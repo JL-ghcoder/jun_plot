@@ -1,0 +1,52 @@
+# 图表基本尺寸 - 宽屏比例适合幻灯片
+figsize: [8, 4.5]  # 图表大小 [宽, 高]，单位为英寸
+
+# 字体配置（元素细分）
+font_config:
+  # 标题字体设置
+  title:
+    size: 16  # 标题字体大小
+    weight: bold  # 字体粗细: normal, bold
+  
+  # X轴标签字体设置
+  xlabel:
+    size: 14
+    weight: normal
+  
+  # Y轴标签字体设置
+  ylabel:
+    size: 14
+    weight: normal
+  
+  # 图例字体设置
+  legend:
+    size: 12
+    weight: normal
+  
+  # 刻度标签字体设置
+  ticks:
+    size: 12
+    weight: normal
+  
+  # 默认字体设置
+  default:
+    size: 14
+    weight: normal
+
+# 内边距配置
+padding_config:
+  title: 15  # 标题内边距
+  xlabel: 12  # X轴标签内边距
+  ylabel: 12  # Y轴标签内边距
+  legend: 5   # 图例内边距
+
+# 颜色配置 - 明亮鲜艳适合屏幕显示
+color_palette:
+  - "#3498DB"  # 亮蓝
+  - "#E74C3C"  # 亮红
+  - "#2ECC71"  # 亮绿
+  - "#F39C12"  # 亮橙
+  - "#9B59B6"  # 亮紫
+  - "#1ABC9C"  # 松石绿
+  - "#F1C40F"  # 亮黄
+  - "#34495E"  # 深蓝灰
