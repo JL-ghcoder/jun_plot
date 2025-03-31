@@ -10,6 +10,7 @@ from cycler import cycler
 import os
 import yaml
 import platform
+import numpy as np
 from typing import Dict, List, Tuple, Optional, Any
 
 # 定义包路径及样式文件夹
@@ -310,6 +311,18 @@ class JunPlot:
             ax.set_title(title, fontsize=self.font_config['title']['size'], 
                         fontweight=self.font_config['title']['weight'], pad=pad)
     
+    def set_suptitle(self, fig, title, y=1.0, **kwargs):
+        """为图表设置总标题，应用相同的字体设置"""
+        font_props = self.fonts.get('title')
+        
+        if font_props:
+            return fig.suptitle(title, fontproperties=font_props, y=y, **kwargs)
+        else:
+            fontsize = self.font_config['title']['size'] * 1.2  # 总标题稍大
+            fontweight = self.font_config['title']['weight']
+            return fig.suptitle(title, fontsize=fontsize, fontweight=fontweight, y=y, **kwargs)
+    
+    
     def set_xlabel(self, ax, label):
         """设置带有适当字体和内边距的x轴标签"""
         font_props = self.fonts.get('xlabel')
@@ -361,6 +374,106 @@ class JunPlot:
         else:
             ax.tick_params(axis='both', which='major', 
                           labelsize=self.font_config['ticks']['size'])
+            
+    
+    # 多图的支持
+    def create_subplots(self, nrows=1, ncols=1, figsize=None, dpi=None, sharex=False, sharey=False):
+        """
+        创建多子图布局
+        
+        参数:
+        -----
+        nrows: int
+            行数
+        ncols: int
+            列数
+        figsize: Optional[Tuple[float, float]]
+            图表大小，如果不指定则自动计算
+        dpi: Optional[int]
+            图表DPI，如果不指定则使用默认DPI
+        sharex, sharey: bool
+            是否共享x轴或y轴
+            
+        返回:
+        ------
+        Tuple[Figure, ndarray]
+            matplotlib图表和坐标轴数组
+        """
+        # 计算默认figsize（如果未提供）
+        if figsize is None:
+            # 根据子图数量自动调整大小
+            base_size = self.figsize
+            figsize = (base_size[0] * ncols, base_size[1] * nrows)
+        
+        if dpi is None:
+            dpi = self.dpi
+        
+        # 创建子图
+        fig, axs = plt.subplots(nrows=nrows, ncols=ncols, figsize=figsize, dpi=dpi,
+                            sharex=sharex, sharey=sharey)
+        
+        # 确保axs是数组，即使是单个子图
+        if nrows == 1 and ncols == 1:
+            axs = np.array([axs])
+        
+        # 将axs转换为一维数组，以便迭代
+        axs_flat = axs.flatten() if isinstance(axs, np.ndarray) else [axs]
+        
+        # 为每个子图应用样式
+        for ax in axs_flat:
+            # 设置颜色循环
+            ax.set_prop_cycle(cycler(color=self.color_palette))
+            
+            # 应用刻度样式
+            self.set_tick_params(ax)
+            
+            # 应用其他样式设置
+            self._apply_styles_to_axes(ax)
+        
+        return fig, axs
+
+    def set_suptitle(self, fig, title, **kwargs):
+        """
+        设置总标题，应用与标题相同的字体设置
+        
+        参数:
+        -----
+        fig: matplotlib.figure.Figure
+            要设置标题的图表
+        title: str
+            标题文本
+        **kwargs:
+            传递给fig.suptitle的其他参数
+        """
+        font_props = self.fonts.get('title')
+        
+        # 设置默认值
+        title_kwargs = {}
+        
+        # 添加字体属性
+        if font_props:
+            title_kwargs['fontproperties'] = font_props
+        else:
+            title_kwargs['fontsize'] = self.font_config['title']['size'] * 1.2  # 略大于普通标题
+            title_kwargs['weight'] = self.font_config['title']['weight']
+        
+        # 更新用户参数
+        title_kwargs.update(kwargs)
+        
+        # 设置标题
+        return fig.suptitle(title, **title_kwargs)
+
+    def _apply_styles_to_axes(self, ax):
+        """将基本样式设置应用到坐标轴"""
+        # 可以添加默认网格设置
+        ax.grid(True, alpha=0.3, linestyle='--', linewidth=0.5)
+        
+        # 可以添加默认刻度方向
+        ax.tick_params(direction='out')
+        
+        # 默认移除上边框和右边框
+        self.format_spines(ax)
+
     
     def export_config(self) -> Dict:
         """导出当前配置为字典"""
